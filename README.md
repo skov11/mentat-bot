@@ -1,30 +1,35 @@
-# 🧠 Mentat-Bot - Advanced Discord Bot Framework
+# Mentat-Bot Framework
 
 A powerful, modular Discord bot framework with an intelligent web-based management interface, comprehensive plugin system, and advanced moderation capabilities.
 
----
-
 ## ✨ Features
 
-### 🎯 **Core Bot Features**
+- 🛡️ **Advanced Moderation System** - Kick, ban, mute, warn users with comprehensive logging
+- 📊 **Server Statistics & Analytics** - Detailed server info, user profiles, and real-time metrics
+- 🔌 **Hot-Swappable Plugin System** - Add/remove functionality without restarting
+- 🎨 **Dynamic Theme Support** - 5 beautiful themes that sync across Discord embeds and web UI
+- ⚡ **Real-time Monitoring** - Live status updates and performance metrics
+- 🔒 **Advanced Permission System** - Role-based command access with security checks
+- 📱 **Modern Responsive Design** - Glass morphism UI with smooth animations
+- ⚙️ **Live Configuration Editor** - Change bot settings instantly through web interface
+- 🔧 **Plugin Management Dashboard** - Enable/disable plugins with one click
+- 📈 **Real-time Statistics** - Monitor bot performance, server stats, and user activity
+- 🎨 **Theme Customization** - Preview and switch themes with live updates
+- 📊 **Analytics Dashboard** - Track commands, user joins/leaves, and bot uptime
+- 🔍 **User Verification System** - Screenshot-based verification with admin approval workflow
 
-- **🛡️ Advanced Moderation System** - Kick, ban, mute, warn users with comprehensive logging
-- **📊 Server Statistics & Analytics** - Detailed server info, user profiles, and real-time metrics
-- **🔌 Hot-Swappable Plugin System** - Add/remove functionality without restarting
-- **🎨 Dynamic Theme Support** - 5 beautiful themes that sync across Discord embeds and web UI
-- **⚡ Real-time Monitoring** - Live status updates and performance metrics
-- **🔒 Advanced Permission System** - Role-based command access with security checks
+## 🎨 Default Theme: House Atreides
 
-### 🌐 **Web Management Interface**
+The framework now defaults to the **House Atreides** theme, featuring:
 
-- **📱 Modern Responsive Design** - Glass morphism UI with smooth animations
-- **⚙️ Live Configuration Editor** - Change bot settings instantly through web interface
-- **🔧 Plugin Management Dashboard** - Enable/disable plugins with one click
-- **📈 Real-time Statistics** - Monitor bot performance, server stats, and user activity
-- **🎨 Theme Customization** - Preview and switch themes with live updates
-- **📊 Analytics Dashboard** - Track commands, user joins/leaves, and bot uptime
+- Noble royal blue and gold color scheme
+- Inspired by the Dune universe
+- Professional and commanding appearance
+- Perfect for serious Discord communities
 
-### 🛡️ **Moderation Commands**
+## 🔌 Built-in Plugins
+
+### Moderation Plugin
 
 - **User Management**: `!kick`, `!ban`, `!mute`, `!unmute`, `!warn`
 - **Message Management**: `!clear` (bulk delete with safety checks)
@@ -33,7 +38,7 @@ A powerful, modular Discord bot framework with an intelligent web-based manageme
 - **DM Notifications**: Users receive notifications when moderated
 - **Permission Validation**: Automatic permission checks for all moderation actions
 
-### 📊 **Server Analytics Commands**
+### Server Statistics Plugin
 
 - **Server Overview**: `!serverinfo` - Complete server statistics and information
 - **User Profiles**: `!userinfo` - Detailed user information with join dates and roles
@@ -42,13 +47,34 @@ A powerful, modular Discord bot framework with an intelligent web-based manageme
 - **Channel Analysis**: `!channelinfo` - Detailed channel information and settings
 - **Role Management**: `!roleinfo` - Role information with member lists and permissions
 
-### 🔧 **Utility Commands**
+### Verification Plugin
+
+_Based on [Zachdidit's Discord Verification Bot](https://github.com/Zachdidit/discord-verification-bot)_
+
+- **Slash Commands**: `/verify` with screenshot, character name, and guild name submission
+- **Admin Approval Workflow**: Verification requests sent to designated approval channel with approve/reject buttons
+- **Role-based Permissions**: Only users with specified roles can approve verifications
+- **Anti-Duplicate System**: Prevents users from submitting multiple verification requests
+- **Comprehensive Logging**: All verification events logged to both file and Discord channel
+- **DM Notifications**: Users receive notifications when their verification is approved or rejected
+- **Auto-cleanup**: Expired verification requests are automatically removed
+- **Status Tracking**: Users can check their verification status with `/verification-status`
+- **Admin Dashboard**: Verification statistics and management tools
+
+#### Verification Commands:
+
+- `/verify` - Submit verification request with screenshot and details
+- `/verification-setup` - Configure the verification system (Admin only)
+- `/verification-status` - Check your verification status or view system statistics
+- `/verification-logs` - View recent verification logs (Admin only)
+
+### Utility Plugin
 
 - **System Status**: `!ping` - Check bot latency and response time
 - **Help System**: `!help` - Dynamic command listing with descriptions
 - **Bot Information**: `!info` - Framework version and configuration details
 
-### 🏗️ **Technical Features**
+## 🛠️ Technical Stack
 
 - **Node.js 16+** - Modern JavaScript with async/await support
 - **Discord.js v14** - Latest Discord API features and performance
@@ -59,303 +85,200 @@ A powerful, modular Discord bot framework with an intelligent web-based manageme
 - **Environment Configuration** - Support for .env files and environment variables
 - **Cross-Platform Support** - Works on Windows, macOS, and Linux
 
----
-
-## 🚀 Complete Setup Guide
-
-### Prerequisites
+## 📋 Prerequisites
 
 Before starting, ensure you have:
 
 - **Node.js 16.0.0 or higher** ([Download here](https://nodejs.org/))
-- **A Discord account** and basic understanding of Discord servers
-- **Basic command line knowledge**
-- **Text editor** (VS Code recommended)
+- A Discord account and basic understanding of Discord servers
+- Basic command line knowledge
+- Text editor (VS Code recommended)
 
-### Step 1: Discord Bot Setup
+## 🚀 Quick Start
 
-1. **Create Discord Application**
+### 1. Create Discord Application
 
-   - Go to [Discord Developer Portal](https://discord.com/developers/applications)
-   - Click "New Application"
-   - Name it "Mentat-Bot" (or your preferred name)
-   - Click "Create"
+- Go to [Discord Developer Portal](https://discord.com/developers/applications)
+- Click "New Application"
+- Name it "Mentat-Bot" (or your preferred name)
+- Click "Create"
 
-2. **Create Bot User**
+### 2. Create Bot User
 
-   - Go to the "Bot" section in left sidebar
-   - Click "Add Bot" → "Yes, do it!"
-   - **Copy the bot token** (keep this secret!)
-   - Under "Privileged Gateway Intents", enable:
-     - ✅ Server Members Intent
-     - ✅ Message Content Intent
+- Go to the "Bot" section in left sidebar
+- Click "Add Bot" → "Yes, do it!"
+- Copy the bot token (keep this secret!)
+- Under "Privileged Gateway Intents", enable:
+  - ✅ Server Members Intent
+  - ✅ Message Content Intent
 
-3. **Set Bot Permissions**
-   - Go to "OAuth2" → "URL Generator"
-   - Select scopes: `bot`
-   - Select bot permissions:
-     ```
-     ✅ View Channels
-     ✅ Send Messages
-     ✅ Embed Links
-     ✅ Read Message History
-     ✅ Kick Members
-     ✅ Ban Members
-     ✅ Manage Messages
-     ✅ Moderate Members
-     ✅ Manage Roles
-     ```
-   - Copy the generated URL and use it to invite your bot to your server
+### 3. Set Bot Permissions
 
-### Step 2: Project Setup
+- Go to "OAuth2" → "URL Generator"
+- Select scopes: `bot`, `applications.commands`
+- Select bot permissions:
+  - ✅ View Channels
+  - ✅ Send Messages
+  - ✅ Embed Links
+  - ✅ Read Message History
+  - ✅ Kick Members
+  - ✅ Ban Members
+  - ✅ Manage Messages
+  - ✅ Moderate Members
+  - ✅ Manage Roles
+  - ✅ Use Application Commands
+- Copy the generated URL and use it to invite your bot to your server
 
-1. **Create Project Directory**
+### 4. Project Setup
 
-   ```bash
-   mkdir mentat-bot
-   cd mentat-bot
-   ```
+```bash
+# Create project directory
+mkdir mentat-bot
+cd mentat-bot
 
-2. **Initialize Node.js Project**
+# Initialize Node.js project
+npm init -y
 
-   ```bash
-   npm init -y
-   ```
+# Install dependencies
+npm install discord.js@latest express
+npm install --save-dev nodemon
 
-3. **Install Dependencies**
-
-   ```bash
-   npm install discord.js@latest express
-   npm install --save-dev nodemon
-   ```
-
-4. **Create Directory Structure**
-   ```bash
-   mkdir plugins
-   mkdir web
-   ```
-
-Your directory should look like:
-
-```
-mentat-bot/
-├── package.json
-├── plugins/
-└── web/
+# Create directory structure
+mkdir plugins
+mkdir web
+mkdir config
+mkdir logs
 ```
 
-### Step 3: Download Framework Files
+### 5. Create Configuration Files
 
-Create these files in your project directory:
+Create `.env` file:
 
-1. **Main Framework** (`discord-framework.js`)
+```env
+# Discord Bot Configuration
+DISCORD_TOKEN=your_actual_bot_token_here
+PREFIX=!
+PORT=3000
+THEME=atreides
 
-   - Copy the framework code from the first artifact
-
-2. **Main Bot File** (`index.js`)
-
-   - Copy the main bot code from the updated index.js artifact
-
-3. **Web Interface** (`web/index.html`)
-
-   - Copy the web UI code from the HTML artifact
-
-4. **Moderation Plugin** (`plugins/moderation.js`)
-
-   - Copy the moderation plugin code
-
-5. **ServerStats Plugin** (`plugins/serverstats.js`)
-   - Copy the server stats plugin code
-
-### Step 4: Configuration
-
-1. **Create Environment File**
-
-   Create a `.env` file in your project root:
-
-   ```bash
-   touch .env
-   ```
-
-   Add your configuration to `.env`:
-
-   ```env
-   # Discord Bot Configuration
-   DISCORD_TOKEN=your_actual_bot_token_here
-   PREFIX=!
-   PORT=3000
-   THEME=blue
-
-   # Optional Settings
-   NODE_ENV=development
-   PLUGINS_PATH=./plugins
-   CONFIG_PATH=./config.json
-   ```
-
-2. **Install Environment Support**
-
-   ```bash
-   npm install dotenv
-   ```
-
-3. **Update Main Bot File**
-
-   Add this line to the top of `index.js` (after the requires):
-
-   ```javascript
-   require("dotenv").config();
-   ```
-
-4. **Create Example Environment File**
-
-   Create `.env.example` for documentation (safe to commit):
-
-   ```bash
-   cp .env .env.example
-   ```
-
-   Then edit `.env.example` to remove your actual token:
-
-   ```env
-   # Discord Bot Configuration
-   DISCORD_TOKEN=your_bot_token_here
-   PREFIX=!
-   PORT=3000
-   THEME=blue
-
-   # Optional Settings
-   NODE_ENV=development
-   PLUGINS_PATH=./plugins
-   CONFIG_PATH=./config.json
-   ```
-
-5. **Update package.json Scripts**
-   ```json
-   {
-     "scripts": {
-       "start": "node index.js",
-       "dev": "nodemon index.js",
-       "test": "node index.js"
-     },
-     "dependencies": {
-       "discord.js": "^14.14.1",
-       "express": "^4.18.2",
-       "dotenv": "^16.3.1"
-     }
-   }
-   ```
-
-### Step 5: First Run
-
-1. **Start the Bot**
-
-   ```bash
-   npm start
-   ```
-
-   Or for development with auto-restart:
-
-   ```bash
-   npm run dev
-   ```
-
-2. **Check for Success Messages**
-   You should see:
-
-   ```
-   🚀 Starting Mentat-Bot Framework...
-   🌐 Web server started on http://localhost:3000
-   📊 Dashboard: http://localhost:3000
-   📦 Loading plugins...
-   ✅ Loaded plugin: Utility
-   ✅ Loaded plugin: Moderation (6 commands)
-   ✅ Loaded plugin: ServerStats (6 commands)
-   ✅ All plugins loaded successfully! Total: 3 plugins, 14 commands
-   🔌 Connecting to Discord...
-   🤖 Bot is ready! Logged in as YourBotName#1234
-   🎉 Mentat-Bot framework is fully ready!
-   ```
-
-   **If you see a token warning:**
-
-   ```
-   ⚠️  No Discord token provided. Web interface will work but bot won't connect to Discord.
-   ```
-
-   Check that your `.env` file has the correct `DISCORD_TOKEN` value.
-
-3. **Access Web Interface**
-   - Open browser to `http://localhost:3000`
-   - You should see the Mentat-Bot dashboard
-
-### Step 6: Test Commands
-
-In your Discord server, test these commands:
-
-**Basic Commands:**
-
-```
-!ping          # Check bot response
-!help          # List all commands
-!info          # Bot information
+# Optional Settings
+NODE_ENV=development
+PLUGINS_PATH=./plugins
+CONFIG_PATH=./config.json
 ```
 
-**Moderation Commands:**
+Create `package.json` scripts:
 
-```
-!serverinfo    # Server statistics
-!userinfo      # Your user information
-!membercount   # Current member count
-```
-
-**Admin Commands** (requires permissions):
-
-```
-!kick @user reason here
-!clear 5
-!warn @user Please follow rules
+```json
+{
+  "scripts": {
+    "start": "THEME=atreides node index.js",
+    "dev": "THEME=atreides nodemon index.js",
+    "test": "THEME=atreides node index.js"
+  }
+}
 ```
 
-### Step 7: Web Interface Tour
+### 6. Install Environment Support
 
-1. **Dashboard Tab**
+```bash
+npm install dotenv
+```
 
-   - View real-time bot statistics
-   - Monitor server count, users, plugins
-   - Check bot online status
+### 7. Start the Bot
 
-2. **Configuration Tab**
+```bash
+npm start
+# Or for development with auto-restart:
+npm run dev
+```
 
-   - Change command prefix
-   - Modify web server port
-   - Select theme
-   - Update plugins directory
+### 8. Setup Verification System (Optional)
 
-3. **Plugins Tab**
+1. Run `/verification-setup` in your Discord server (Admin only)
+2. Configure verification channel, approval channel, verified role, and approver role
+3. Users can now use `/verify` to submit verification requests
+4. Administrators with the approver role can approve/reject requests
 
-   - View all loaded plugins
-   - Enable/disable plugins with toggle switches
-   - See plugin descriptions and command counts
+## 🌐 Web Interface
 
-4. **Themes Tab**
-   - Preview available themes
-   - See color schemes
-   - Test theme changes live
+### Dashboard Features
 
----
+- **Dashboard Tab**: View real-time bot statistics, monitor server count, users, plugins
+- **Configuration Tab**: Change command prefix, modify web server port, select theme, update plugins directory
+- **Plugins Tab**: View all loaded plugins, enable/disable plugins with toggle switches
+- **Themes Tab**: Preview available themes, see color schemes, test theme changes live
 
-## 🔧 Advanced Configuration
+### Accessing the Dashboard
+
+1. Start the bot with `npm start`
+2. Open browser to `http://localhost:3000`
+3. Use the dashboard to monitor and configure your bot
+
+## 🎨 Available Themes
+
+- **House Atreides** (Default) - Noble royal blue and gold theme
+- **Ocean Blue** - Cool blue theme with ocean vibes
+- **Royal Purple** - Elegant purple theme with mystical vibes
+- **Forest Green** - Natural green theme with earthy tones
+- **Crimson Red** - Bold red theme with fiery accents
+
+## 📦 Plugin Development
+
+Create custom plugins using the BasePlugin class:
+
+```javascript
+const { BasePlugin } = require("../discord-framework");
+
+class MyCustomPlugin extends BasePlugin {
+  constructor(framework) {
+    super(framework);
+    this.name = "MyCustomPlugin";
+    this.version = "1.0.0";
+    this.description = "Description of what this plugin does";
+    this.commands = [
+      {
+        name: "mycommand",
+        description: "My custom command",
+        execute: this.myCommand.bind(this),
+      },
+    ];
+  }
+
+  async initialize() {
+    this.log("My plugin initialized!");
+  }
+
+  async myCommand(message, args) {
+    const embed = this.framework.createEmbed({
+      title: "✨ My Custom Command",
+      description: "Hello from my custom plugin!",
+    });
+    message.reply({ embeds: [embed] });
+  }
+}
+
+module.exports = MyCustomPlugin;
+```
+
+### Available Framework Methods
+
+- `this.framework.createEmbed(options)` - Create themed embeds
+- `this.framework.client` - Access Discord.js client
+- `this.framework.config` - Access bot configuration
+- `this.log(message)` - Plugin logging
+- `this.error(message)` - Error logging
+
+## 🔧 Configuration
 
 ### Environment Variables
-
-Create `.env` file for secure configuration:
 
 ```env
 # Discord Bot Configuration
 DISCORD_TOKEN=your_bot_token_here
 PREFIX=!
 PORT=3000
-THEME=blue
+THEME=atreides
 
 # Optional Settings
 NODE_ENV=production
@@ -374,44 +297,44 @@ Add custom themes by modifying the CSS variables in `web/index.html`:
 }
 ```
 
-### Production Deployment
+## 🚀 Production Deployment
 
-1. **Using PM2 (Recommended)**
+### Using PM2 (Recommended)
 
-   ```bash
-   npm install -g pm2
-   pm2 start index.js --name "mentat-bot"
-   pm2 startup
-   pm2 save
-   ```
+```bash
+npm install -g pm2
+pm2 start index.js --name "mentat-bot"
+pm2 startup
+pm2 save
+```
 
-2. **Using Docker**
+### Using Docker
 
-   ```dockerfile
-   FROM node:18-alpine
-   WORKDIR /app
-   COPY package*.json ./
-   RUN npm ci --only=production
-   COPY . .
-   EXPOSE 3000
-   CMD ["npm", "start"]
-   ```
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+```
 
-3. **Reverse Proxy (Nginx)**
-   ```nginx
-   server {
-       listen 80;
-       server_name your-domain.com;
+### Reverse Proxy (Nginx)
 
-       location / {
-           proxy_pass http://localhost:3000;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-       }
-   }
-   ```
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
 
-### Database Integration (Optional)
+## 🗃️ Database Integration
 
 For persistent data storage, add database support:
 
@@ -423,127 +346,13 @@ npm install mongodb
 npm install mysql2
 ```
 
-Example SQLite integration in plugins:
+## 🔍 Troubleshooting
 
-```javascript
-const sqlite3 = require("sqlite3").verbose();
-
-class DatabasePlugin extends BasePlugin {
-  async initialize() {
-    this.db = new sqlite3.Database("./bot.db");
-    await this.createTables();
-  }
-
-  async createTables() {
-    this.db.run(`
-            CREATE TABLE IF NOT EXISTS warnings (
-                id INTEGER PRIMARY KEY,
-                user_id TEXT,
-                guild_id TEXT,
-                reason TEXT,
-                moderator TEXT,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-  }
-}
-```
-
----
-
-## 🔌 Creating Custom Plugins
-
-### Basic Plugin Structure
-
-```javascript
-const { BasePlugin } = require("../discord-framework");
-
-class MyCustomPlugin extends BasePlugin {
-  constructor(framework) {
-    super(framework);
-    this.name = "MyCustomPlugin";
-    this.version = "1.0.0";
-    this.description = "Description of what this plugin does";
-
-    this.commands = [
-      {
-        name: "mycommand",
-        description: "My custom command",
-        execute: this.myCommand.bind(this),
-      },
-    ];
-
-    this.events = [
-      {
-        name: "messageCreate",
-        handler: this.onMessage.bind(this),
-      },
-    ];
-  }
-
-  async initialize() {
-    this.log("My plugin initialized!");
-    // Setup code here
-  }
-
-  async myCommand(message, args) {
-    const embed = this.framework.createEmbed({
-      title: "✨ My Custom Command",
-      description: "Hello from my custom plugin!",
-      fields: [
-        { name: "Arguments", value: args.join(" ") || "None", inline: true },
-      ],
-    });
-
-    message.reply({ embeds: [embed] });
-  }
-
-  onMessage(message) {
-    if (message.author.bot) return;
-    this.log(`Message from ${message.author.tag}: ${message.content}`);
-  }
-
-  async cleanup() {
-    this.log("Plugin cleanup completed");
-  }
-}
-
-module.exports = MyCustomPlugin;
-```
-
-### Plugin Features Available
-
-- **this.framework.createEmbed(options)** - Create themed embeds
-- **this.framework.client** - Access Discord.js client
-- **this.framework.config** - Access bot configuration
-- **this.log(message)** - Plugin logging
-- **this.error(message)** - Error logging
-
-### Adding Your Plugin
-
-1. Create your plugin file in `plugins/` directory
-2. Add to main bot file:
-
-   ```javascript
-   const MyCustomPlugin = require("./plugins/mycustomplugin");
-
-   // In loadPlugins function:
-   const myPlugin = new MyCustomPlugin(bot);
-   await myPlugin.initialize();
-   bot.plugins.set(myPlugin.name, myPlugin);
-   ```
-
----
-
-## 🛠️ Troubleshooting
-
-### Common Issues
-
-**Bot Won't Start**
+### Bot Won't Start
 
 ```bash
 # Check Node.js version
-node --version  # Should be 16+
+node --version # Should be 16+
 
 # Check dependencies
 npm list discord.js express
@@ -553,59 +362,41 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-**404 Errors in Web Interface**
-
-```bash
-# Check if web server is running
-curl http://localhost:3000/api/health
-
-# Check file structure
-ls -la discord-framework.js index.js
-ls -la plugins/
-ls -la web/
-```
-
-**Discord Connection Issues**
+### Discord Connection Issues
 
 - Verify bot token is correct in `.env` file
 - Check bot permissions in Discord server
 - Ensure intents are enabled in Discord Developer Portal
 - Make sure `.env` file is in the same directory as `index.js`
 
-**Commands Not Working**
+### Commands Not Working
 
 - Check bot has necessary permissions
 - Verify command prefix in configuration
 - Check console for error messages
 
-**Web Interface Not Loading**
+### Web Interface Not Loading
 
 - Check if port 3000 is available: `lsof -i :3000`
 - Try different port in configuration
 - Check firewall settings
 
-### Debug Mode
+## 📊 Performance Guidelines
 
-Enable detailed logging:
+### Resource Usage
 
-```javascript
-// Add to top of index.js
-process.env.DEBUG = "*";
-```
+- **Base Framework**: ~30-50MB
+- **Per Plugin**: ~5-10MB
+- **Discord.js Client**: ~50-100MB
+- **Web Server**: ~10-20MB
 
-### Getting Help
+### Scalability Recommendations
 
-1. **Check Console Output** - Look for error messages and warnings
-2. **Verify File Structure** - Ensure all files are in correct locations
-3. **Test Components** - Test web server and Discord connection separately
-4. **Check Permissions** - Verify bot has required Discord permissions
-5. **Review Configuration** - Double-check all configuration values
+- **Small Server** (< 1k members): All features enabled
+- **Medium Server** (1k-10k members): Monitor memory usage
+- **Large Server** (10k+ members): Consider database for warnings/logs
 
----
-
-## 📚 API Reference
-
-### Web API Endpoints
+## 📈 API Endpoints
 
 | Endpoint                    | Method | Description               |
 | --------------------------- | ------ | ------------------------- |
@@ -617,85 +408,25 @@ process.env.DEBUG = "*";
 | `/api/plugins/:name/toggle` | POST   | Enable/disable plugin     |
 | `/api/themes`               | GET    | Available themes          |
 
-### Framework Methods
-
-```javascript
-// Create themed embeds
-bot.createEmbed({
-  title: "Title",
-  description: "Description",
-  fields: [{ name: "Field", value: "Value", inline: true }],
-});
-
-// Plugin management
-bot.plugins.get("PluginName");
-bot.loadPlugin("filename.js");
-bot.unloadPlugin("PluginName");
-
-// Command registration
-bot.commands.set("commandname", commandObject);
-```
-
----
-
-## 📊 Performance & Scaling
-
-### Memory Usage
-
-- **Base Framework**: ~30-50MB
-- **Per Plugin**: ~5-10MB
-- **Discord.js Client**: ~50-100MB
-- **Web Server**: ~10-20MB
-
-### Recommended Limits
-
-- **Small Server** (< 1k members): All features enabled
-- **Medium Server** (1k-10k members): Monitor memory usage
-- **Large Server** (10k+ members): Consider database for warnings/logs
-
-### Performance Tips
-
-1. **Use PM2** for process management
-2. **Enable gzip** compression for web interface
-3. **Implement database** for persistent data storage
-4. **Monitor memory usage** with `!stats` command
-5. **Regular restarts** for long-running instances
-
----
-
 ## 🤝 Contributing
 
-### Development Setup
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-```bash
-git clone your-repo
-cd mentat-bot
-npm install
-npm run dev
-```
+### Plugin Development Guidelines
 
-### Plugin Contribution Guidelines
-
-1. Follow BasePlugin structure
-2. Include comprehensive error handling
-3. Add proper documentation
-4. Test with different Discord servers
-5. Ensure no security vulnerabilities
-
-### Code Style
-
-- Use async/await for promises
-- Include JSDoc comments for functions
-- Follow Discord.js best practices
-- Use descriptive variable names
-
----
+- Follow BasePlugin structure
+- Include comprehensive error handling
+- Add proper documentation
+- Test with different Discord servers
+- Ensure no security vulnerabilities
 
 ## 📄 License
 
 MIT License - Feel free to use this framework for personal or commercial projects.
-
----
 
 ## 🙏 Acknowledgments
 
@@ -703,12 +434,9 @@ MIT License - Feel free to use this framework for personal or commercial project
 - **Express.js** - Fast web framework
 - **Node.js** - JavaScript runtime
 - **Discord Developer Community** - Inspiration and support
+- **[Zachdidit's Discord Verification Bot](https://github.com/Zachdidit/discord-verification-bot)** - Original verification system implementation
 
----
-
-## 🔮 Roadmap
-
-### Upcoming Features
+## 🔮 Future Roadmap
 
 - [ ] Slash Commands Support
 - [ ] Database Integration Helpers
@@ -719,14 +447,15 @@ MIT License - Feel free to use this framework for personal or commercial project
 - [ ] External API Integrations
 - [ ] Mobile App Companion
 
-### Version History
+## 📝 Changelog
 
-- **v1.0.0** - Initial release with core framework
-- **v1.1.0** - Added moderation and stats plugins
+- **v2.0.0** - Added verification plugin, House Atreides default theme
 - **v1.2.0** - Modern UI redesign as Mentat-Bot
+- **v1.1.0** - Added moderation and stats plugins
+- **v1.0.0** - Initial release with core framework
 
 ---
 
-**Happy botting! 🧠🤖**
+**Happy botting! ⚔️🤖**
 
-_Built with ❤️ for the Discord community_
+_Built with ❤️ for the Discord community and inspired by the noble House Atreides_
