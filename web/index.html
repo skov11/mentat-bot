@@ -1,908 +1,680 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentat-Bot - Configuration Dashboard</title>
-    <style>
-      :root {
-        --primary-color: #6366f1;
-        --secondary-color: #4f46e5;
-        --accent-color: #7c3aed;
-        --bg-color: #0f172a;
-        --card-bg: #1e293b;
-        --surface-color: #334155;
-        --text-color: #f8fafc;
-        --text-muted: #94a3b8;
-        --border-color: #475569;
-        --success-color: #10b981;
-        --error-color: #ef4444;
-        --warning-color: #f59e0b;
-        --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-        --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-        --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-          0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-          0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        --glow: 0 0 20px rgba(99, 102, 241, 0.3);
-      }
-
-      [data-theme="default"] {
-        --primary-color: #6366f1;
-        --secondary-color: #4f46e5;
-        --accent-color: #7c3aed;
-      }
-
-      [data-theme="dark"] {
-        --primary-color: #374151;
-        --secondary-color: #4b5563;
-        --accent-color: #6b7280;
-      }
-
-      [data-theme="blue"] {
-        --primary-color: #0ea5e9;
-        --secondary-color: #0284c7;
-        --accent-color: #0369a1;
-      }
-
-      [data-theme="purple"] {
-        --primary-color: #a855f7;
-        --secondary-color: #9333ea;
-        --accent-color: #7c2d12;
-      }
-
-      [data-theme="green"] {
-        --primary-color: #059669;
-        --secondary-color: #047857;
-        --accent-color: #065f46;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Inter", sans-serif;
-        background: var(--bg-color);
-        background-image: radial-gradient(
-            circle at 20% 80%,
-            rgba(99, 102, 241, 0.1) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 80% 20%,
-            rgba(139, 92, 246, 0.1) 0%,
-            transparent 50%
-          );
-        color: var(--text-color);
-        line-height: 1.6;
-        min-height: 100vh;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-
-      .header {
-        background: var(--card-bg);
-        background-image: var(--gradient-primary);
-        padding: 32px;
-        border-radius: 16px;
-        margin-bottom: 32px;
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-large);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          transparent 100%
-        );
-        pointer-events: none;
-      }
-
-      .header h1 {
-        color: white;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 2.5rem;
-        font-weight: 800;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        position: relative;
-      }
-
-      .header p {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1rem;
-        margin-bottom: 24px;
-        position: relative;
-      }
-
-      .status-indicator {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: var(--error-color);
-        animation: pulse 2s infinite;
-      }
-
-      .status-indicator.online {
-        background: var(--success-color);
-      }
-
-      @keyframes pulse {
-        0% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        margin-top: 15px;
-      }
-
-      .stat-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-medium);
-        background: rgba(255, 255, 255, 0.15);
-      }
-
-      .stat-value {
-        font-size: 2.5em;
-        font-weight: 900;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      .stat-label {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9em;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .tab-container {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-
-      .tab-button {
-        background: var(--card-bg);
-        color: var(--text-color);
-        border: 1px solid var(--border-color);
-        padding: 16px 24px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 600;
-        font-size: 0.95rem;
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-      }
-
-      .tab-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: var(--gradient-primary);
-        transition: left 0.3s ease;
-        z-index: -1;
-      }
-
-      .tab-button:hover::before {
-        left: 0;
-      }
-
-      .tab-button:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-medium);
-        border-color: var(--primary-color);
-      }
-
-      .tab-button.active {
-        background: var(--gradient-primary);
-        border-color: var(--primary-color);
-        color: white;
-        box-shadow: var(--glow);
-      }
-
-      .tab-content {
-        display: none;
-        background: var(--card-bg);
-        padding: 32px;
-        border-radius: 16px;
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-medium);
-        backdrop-filter: blur(10px);
-      }
-
-      .tab-content.active {
-        display: block;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: var(--text-color);
-        font-weight: 500;
-      }
-
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        padding: 16px;
-        background: var(--surface-color);
-        border: 2px solid var(--border-color);
-        border-radius: 12px;
-        color: var(--text-color);
-        font-size: 15px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-      }
-
-      .form-group input:focus,
-      .form-group select:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        background: var(--card-bg);
-      }
-
-      .btn {
-        background: var(--gradient-primary);
-        color: white;
-        border: none;
-        padding: 16px 32px;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 15px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-soft);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .btn::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-        transform: translate(-50%, -50%);
-      }
-
-      .btn:hover::before {
-        width: 300px;
-        height: 300px;
-      }
-
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-large);
-      }
-
-      .btn-success {
-        background: var(--success-color);
-      }
-
-      .btn-danger {
-        background: var(--error-color);
-      }
-
-      .plugin-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .plugin-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--gradient-primary);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-
-      .plugin-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-large);
-        border-color: var(--primary-color);
-      }
-
-      .plugin-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .plugin-header {
-        display: flex;
-        justify-content: between;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-
-      .plugin-info h3 {
-        color: var(--primary-color);
-        margin-bottom: 5px;
-      }
-
-      .plugin-description {
-        color: var(--text-muted);
-        font-size: 0.9em;
-      }
-
-      .plugin-controls {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .toggle-switch {
-        position: relative;
-        width: 60px;
-        height: 30px;
-        background: var(--border-color);
-        border-radius: 15px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-
-      .toggle-switch.active {
-        background: var(--gradient-primary);
-        box-shadow: var(--glow);
-      }
-
-      .toggle-switch::after {
-        content: "";
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 24px;
-        height: 24px;
-        background: white;
-        border-radius: 50%;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-
-      .toggle-switch.active::after {
-        transform: translateX(30px);
-      }
-
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 6px;
-        color: white;
-        font-weight: 500;
-        z-index: 1000;
-        transform: translateX(100%);
-        transition: transform 0.3s;
-      }
-
-      .notification.show {
-        transform: translateX(0);
-      }
-
-      .notification.success {
-        background: var(--success-color);
-      }
-
-      .notification.error {
-        background: var(--error-color);
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-      }
-
-      .loading {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 3px solid var(--border-color);
-        border-radius: 50%;
-        border-top-color: var(--primary-color);
-        animation: spin 1s ease-in-out infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <body>
+    <link rel="stylesheet" href="styles.css">
+</head>
+</head>
+<body>
     <div class="container">
-      <div class="header">
-        <h1>
-          🧠 Mentat-Bot
-          <div class="status-indicator" id="statusIndicator"></div>
-        </h1>
-        <p>Advanced Discord bot management with intelligence and precision</p>
-        <div class="stats" id="stats">
-          <div class="stat-card">
-            <div class="stat-value" id="guildCount">-</div>
-            <div class="stat-label">Servers</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="userCount">-</div>
-            <div class="stat-label">Users</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="pluginCount">-</div>
-            <div class="stat-label">Plugins</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="commandCount">-</div>
-            <div class="stat-label">Commands</div>
-          </div>
+        <div class="header" id="headerBanner">
+            <div class="mentat-avatar" id="mentatAvatar">
+                <img id="mentatImage" src="" alt="Mentat" style="display: none;">
+            </div>
+            <h1>
+                <span id="mentatTitle">Mentat-Bot</span>
+                <div class="status-indicator" id="statusIndicator"></div>
+            </h1>
+            <p id="mentatSubtitle" style="display: none;"></p>
+            <p id="mentatSubtitle">Advanced Discord bot management with intelligence and precision</p>
+            <div class="stats" id="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="guildCount">-</div>
+                    <div class="stat-label">Servers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="userCount">-</div>
+                    <div class="stat-label">Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="pluginCount">-</div>
+                    <div class="stat-label">Plugins</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="commandCount">-</div>
+                    <div class="stat-label">Commands</div>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="tab-container">
-        <button class="tab-button active" onclick="showTab('config')">
-          ⚙️ Configuration
-        </button>
-        <button class="tab-button" onclick="showTab('plugins')">
-          🔌 Plugins
-        </button>
-        <button class="tab-button" onclick="showTab('themes')">
-          🎨 Themes
-        </button>
-      </div>
-
-      <div id="configTab" class="tab-content active">
-        <h2>Bot Configuration</h2>
-        <form id="configForm">
-          <div class="grid">
-            <div>
-              <div class="form-group">
-                <label for="prefix">Command Prefix</label>
-                <input type="text" id="prefix" name="prefix" placeholder="!" />
-              </div>
-              <div class="form-group">
-                <label for="port">Web Server Port</label>
-                <input type="number" id="port" name="port" placeholder="3000" />
-              </div>
-            </div>
-            <div>
-              <div class="form-group">
-                <label for="theme">Current Theme</label>
-                <select id="theme" name="theme">
-                  <option value="default">Default</option>
-                  <option value="dark">Dark</option>
-                  <option value="blue">Blue</option>
-                  <option value="purple">Purple</option>
-                  <option value="green">Green</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="pluginsPath">Plugins Directory</label>
-                <input
-                  type="text"
-                  id="pluginsPath"
-                  name="pluginsPath"
-                  placeholder="./plugins"
-                />
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="btn">💾 Save Configuration</button>
-        </form>
-      </div>
-
-      <div id="pluginsTab" class="tab-content">
-        <h2>Plugin Management</h2>
-        <div id="pluginsList">
-          <div class="loading"></div>
+        <div class="tab-container">
+            <button class="tab-button active" onclick="showTab('config')">⚙️ Configuration</button>
+            <button class="tab-button" onclick="showTab('plugins')">🔌 Plugins</button>
+            <button class="tab-button" onclick="showTab('commands')">📋 Commands</button>
+            <button class="tab-button" onclick="showTab('themes')">🎨 Themes</button>
         </div>
-      </div>
 
-      <div id="themesTab" class="tab-content">
-        <h2>Theme Preview</h2>
-        <div class="grid">
-          <div class="plugin-card">
-            <h3>Theme Colors</h3>
-            <div style="display: flex; gap: 10px; margin-top: 15px">
-              <div
-                style="
-                  width: 50px;
-                  height: 50px;
-                  background: var(--primary-color);
-                  border-radius: 6px;
-                "
-              ></div>
-              <div
-                style="
-                  width: 50px;
-                  height: 50px;
-                  background: var(--secondary-color);
-                  border-radius: 6px;
-                "
-              ></div>
-              <div
-                style="
-                  width: 50px;
-                  height: 50px;
-                  background: var(--success-color);
-                  border-radius: 6px;
-                "
-              ></div>
-              <div
-                style="
-                  width: 50px;
-                  height: 50px;
-                  background: var(--error-color);
-                  border-radius: 6px;
-                "
-              ></div>
-            </div>
-          </div>
-          <div class="plugin-card">
-            <h3>Sample Plugin Card</h3>
-            <p class="plugin-description">
-              This is how plugins will appear with the current theme
-            </p>
-            <div style="margin-top: 15px">
-              <div class="toggle-switch active"></div>
-            </div>
-          </div>
+        <div id="configTab" class="tab-content active">
+            <h2>Bot Configuration</h2>
+            <form id="configForm">
+                <div class="grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="prefix">Command Prefix</label>
+                            <input type="text" id="prefix" name="prefix" placeholder="!">
+                        </div>
+                        <div class="form-group">
+                            <label for="port">Web Server Port</label>
+                            <input type="number" id="port" name="port" placeholder="3000">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="theme">Current Theme</label>
+                            <select id="theme" name="theme">
+                                <option value="default">Default</option>
+                                <option value="atreides">🏜️ House Atreides</option>
+                                <option value="harkonnen">🔥 House Harkonnen</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pluginsPath">Plugins Directory</label>
+                            <input type="text" id="pluginsPath" name="pluginsPath" placeholder="./plugins">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">💾 Save Configuration</button>
+            </form>
         </div>
-      </div>
+
+        <div id="pluginsTab" class="tab-content">
+            <h2>Plugin Management</h2>
+            <div id="pluginsList">
+                <div class="loading"></div>
+            </div>
+        </div>
+
+        <div id="commandsTab" class="tab-content">
+            <h2>Available Commands</h2>
+            <div class="form-group">
+                <label for="commandSearch">Search Commands</label>
+                <input type="text" id="commandSearch" placeholder="Search by command name or plugin..." onkeyup="filterCommands()">
+            </div>
+            <div id="commandsList">
+                <div class="loading"></div>
+            </div>
+        </div>
+
+        <div id="themesTab" class="tab-content">
+            <h2>Theme Preview</h2>
+            <div class="grid">
+                <div class="plugin-card">
+                    <h3>Theme Colors</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <div style="width: 50px; height: 50px; background: var(--primary-color); border-radius: 6px;"></div>
+                        <div style="width: 50px; height: 50px; background: var(--secondary-color); border-radius: 6px;"></div>
+                        <div style="width: 50px; height: 50px; background: var(--success-color); border-radius: 6px;"></div>
+                        <div style="width: 50px; height: 50px; background: var(--error-color); border-radius: 6px;"></div>
+                    </div>
+                </div>
+                <div class="plugin-card">
+                    <h3>Sample Plugin Card</h3>
+                    <p class="plugin-description">This is how plugins will appear with the current theme</p>
+                    <div style="margin-top: 15px;">
+                        <div class="toggle-switch active"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="notification" class="notification"></div>
 
     <script>
-      let config = {};
-      let plugins = [];
-      let status = {};
+        let config = {};
+        let plugins = [];
+        let commands = [];
+        let status = {};
+        let allCommands = []; // Store for filtering
 
-      // Initialize the dashboard
-      async function init() {
-        await loadStatus();
-        await loadConfig();
-        await loadPlugins();
-        setInterval(loadStatus, 5000); // Update status every 5 seconds
-      }
-
-      // Load bot status
-      async function loadStatus() {
-        try {
-          const response = await fetch("/api/status");
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-          const text = await response.text();
-          if (!text) {
-            throw new Error("Empty response from server");
-          }
-
-          try {
-            status = JSON.parse(text);
-          } catch (parseError) {
-            console.error("JSON Parse Error:", parseError);
-            console.error("Response text:", text);
-            throw new Error("Invalid JSON response from server");
-          }
-
-          document.getElementById(
-            "statusIndicator"
-          ).className = `status-indicator ${
-            status.status === "online" ? "online" : "offline"
-          }`;
-          document.getElementById("guildCount").textContent =
-            status.guilds || 0;
-          document.getElementById("userCount").textContent = status.users || 0;
-          document.getElementById("pluginCount").textContent =
-            status.plugins || 0;
-          document.getElementById("commandCount").textContent =
-            status.commands || 0;
-        } catch (error) {
-          console.error("Failed to load status:", error);
-          // Set offline status on error
-          document.getElementById("statusIndicator").className =
-            "status-indicator offline";
-          // Don't throw, just log and continue
-        }
-      }
-
-      // Load configuration
-      async function loadConfig() {
-        try {
-          const response = await fetch("/api/config");
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-          const text = await response.text();
-          if (!text) {
-            throw new Error("Empty config response");
-          }
-
-          try {
-            config = JSON.parse(text);
-          } catch (parseError) {
-            console.error("Config JSON Parse Error:", parseError);
-            console.error("Config response text:", text);
-            // Use default config on parse error
-            config = {
-              prefix: "!",
-              port: 3000,
-              theme: "default",
-              pluginsPath: "./plugins",
-            };
-          }
-
-          document.getElementById("prefix").value = config.prefix || "!";
-          document.getElementById("port").value = config.port || 3000;
-          document.getElementById("theme").value = config.theme || "default";
-          document.getElementById("pluginsPath").value =
-            config.pluginsPath || "./plugins";
-
-          // Apply theme
-          document.body.setAttribute("data-theme", config.theme || "default");
-        } catch (error) {
-          console.error("Failed to load config:", error);
-          showNotification("Failed to load configuration", "error");
-        }
-      }
-
-      // Load plugins
-      async function loadPlugins() {
-        try {
-          const response = await fetch("/api/plugins");
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-          const text = await response.text();
-          if (!text) {
-            plugins = [];
-          } else {
-            try {
-              plugins = JSON.parse(text);
-            } catch (parseError) {
-              console.error("Plugins JSON Parse Error:", parseError);
-              console.error("Plugins response text:", text);
-              plugins = [];
+        // Initialize the dashboard
+        async function init() {
+            await loadStatus();
+            await loadConfig();
+            await loadPlugins();
+            await loadCommands();
+            
+            // Ensure the default text is hidden on page load
+            const subtitleElement = document.getElementById('mentatSubtitle');
+            if (subtitleElement && !config.theme || config.theme === 'default') {
+                subtitleElement.style.display = 'none';
             }
-          }
-
-          renderPlugins();
-        } catch (error) {
-          console.error("Failed to load plugins:", error);
-          document.getElementById("pluginsList").innerHTML =
-            '<p style="color: var(--error-color);">Failed to load plugins. Check console for details.</p>';
-        }
-      }
-
-      // Render plugins list
-      function renderPlugins() {
-        const container = document.getElementById("pluginsList");
-
-        if (plugins.length === 0) {
-          container.innerHTML =
-            '<p style="color: var(--text-muted);">No plugins loaded</p>';
-          return;
+            
+            setInterval(loadStatus, 5000); // Update status every 5 seconds
         }
 
-        container.innerHTML = plugins
-          .map(
-            (plugin) => `
+        // Load bot status
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/status');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                if (!text) {
+                    throw new Error('Empty response from server');
+                }
+                
+                try {
+                    status = JSON.parse(text);
+                } catch (parseError) {
+                    console.error('JSON Parse Error:', parseError);
+                    console.error('Response text:', text);
+                    throw new Error('Invalid JSON response from server');
+                }
+                
+                document.getElementById('statusIndicator').className = 
+                    `status-indicator ${status.status === 'online' ? 'online' : 'offline'}`;
+                document.getElementById('guildCount').textContent = status.guilds || 0;
+                document.getElementById('userCount').textContent = status.users || 0;
+                document.getElementById('pluginCount').textContent = status.plugins || 0;
+                document.getElementById('commandCount').textContent = status.commands || 0;
+            } catch (error) {
+                console.error('Failed to load status:', error);
+                // Set offline status on error
+                document.getElementById('statusIndicator').className = 'status-indicator offline';
+                // Don't throw, just log and continue
+            }
+        }
+
+        // Load configuration
+        async function loadConfig() {
+            try {
+                const response = await fetch('/api/config');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                if (!text) {
+                    throw new Error('Empty config response');
+                }
+                
+                try {
+                    config = JSON.parse(text);
+                } catch (parseError) {
+                    console.error('Config JSON Parse Error:', parseError);
+                    console.error('Config response text:', text);
+                    // Use default config on parse error
+                    config = {
+                        prefix: '!',
+                        port: 3000,
+                        theme: 'default',
+                        pluginsPath: './plugins'
+                    };
+                }
+                
+                document.getElementById('prefix').value = config.prefix || '!';
+                document.getElementById('port').value = config.port || 3000;
+                document.getElementById('theme').value = config.theme || 'default';
+                document.getElementById('pluginsPath').value = config.pluginsPath || './plugins';
+                
+                // Apply theme
+                document.body.setAttribute('data-theme', config.theme || 'default');
+            } catch (error) {
+                console.error('Failed to load config:', error);
+                showNotification('Failed to load configuration', 'error');
+            }
+        }
+
+        // Load plugins
+        async function loadPlugins() {
+            try {
+                const response = await fetch('/api/plugins');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                if (!text) {
+                    plugins = [];
+                } else {
+                    try {
+                        plugins = JSON.parse(text);
+                    } catch (parseError) {
+                        console.error('Plugins JSON Parse Error:', parseError);
+                        console.error('Plugins response text:', text);
+                        plugins = [];
+                    }
+                }
+                
+                renderPlugins();
+            } catch (error) {
+                console.error('Failed to load plugins:', error);
+                document.getElementById('pluginsList').innerHTML = 
+                    '<p style="color: var(--error-color);">Failed to load plugins. Check console for details.</p>';
+            }
+        }
+
+        // Load commands
+        async function loadCommands() {
+            try {
+                const response = await fetch('/api/commands');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                if (!text) {
+                    commands = [];
+                } else {
+                    try {
+                        commands = JSON.parse(text);
+                        allCommands = [...commands]; // Store for filtering
+                    } catch (parseError) {
+                        console.error('Commands JSON Parse Error:', parseError);
+                        commands = [];
+                        allCommands = [];
+                    }
+                }
+                
+                renderCommands();
+            } catch (error) {
+                console.error('Failed to load commands:', error);
+                document.getElementById('commandsList').innerHTML = 
+                    '<p style="color: var(--error-color);">Failed to load commands. Check console for details.</p>';
+            }
+        }
+
+        // Render commands list
+        function renderCommands() {
+            const container = document.getElementById('commandsList');
+            
+            if (commands.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">No commands available</p>';
+                return;
+            }
+            
+            // Group commands by plugin
+            const commandsByPlugin = commands.reduce((acc, cmd) => {
+                const plugin = cmd.plugin || 'Unknown';
+                if (!acc[plugin]) acc[plugin] = [];
+                acc[plugin].push(cmd);
+                return acc;
+            }, {});
+            
+            container.innerHTML = Object.entries(commandsByPlugin).map(([pluginName, pluginCommands]) => `
+                <div class="plugin-card">
+                    <h3>${pluginName} Commands</h3>
+                    <div class="commands-grid">
+                        ${pluginCommands.map(cmd => `
+                            <div class="command-card">
+                                <div class="command-header">
+                                    <span class="command-name">${config.prefix || '!'}${cmd.name}</span>
+                                    <span class="command-plugin">${cmd.plugin}</span>
+                                </div>
+                                <div class="command-description">${cmd.description || 'No description available'}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter commands
+        function filterCommands() {
+            const searchTerm = document.getElementById('commandSearch').value.toLowerCase();
+            
+            if (!searchTerm) {
+                commands = [...allCommands];
+            } else {
+                commands = allCommands.filter(cmd => 
+                    cmd.name.toLowerCase().includes(searchTerm) ||
+                    (cmd.description && cmd.description.toLowerCase().includes(searchTerm)) ||
+                    (cmd.plugin && cmd.plugin.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            renderCommands();
+        }
+
+        // Render plugins list
+        function renderPlugins() {
+            const container = document.getElementById('pluginsList');
+            
+            if (plugins.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">No plugins loaded</p>';
+                return;
+            }
+            
+            container.innerHTML = plugins.map(plugin => `
                 <div class="plugin-card">
                     <div class="plugin-header">
                         <div class="plugin-info">
                             <h3>${plugin.name}</h3>
-                            <p class="plugin-description">${
-                              plugin.description || "No description"
-                            }</p>
-                            <small style="color: var(--text-muted);">
-                                v${plugin.version} • ${plugin.commands} commands
-                            </small>
+                            <p class="plugin-description">${plugin.description || 'No description'}</p>
+                            <div class="plugin-meta">
+                                <span>v${plugin.version}</span>
+                                <span>${plugin.commands} commands</span>
+                                <span>${plugin.events || 0} events</span>
+                            </div>
                         </div>
                         <div class="plugin-controls">
-                            <div class="toggle-switch ${
-                              plugin.enabled ? "active" : ""
-                            }" 
+                            <button class="config-btn" onclick="togglePluginConfig('${plugin.name}')">
+                                ⚙️ Configure
+                            </button>
+                            <div class="toggle-switch ${plugin.enabled ? 'active' : ''}" 
                                  onclick="togglePlugin('${plugin.name}')"></div>
                         </div>
                     </div>
+                    
+                    <div class="plugin-config" id="config-${plugin.name}">
+                        <div class="config-section" id="section-${plugin.name}">
+                            <h4>Plugin Configuration</h4>
+                            ${generatePluginConfig(plugin)}
+                        </div>
+                    </div>
                 </div>
-            `
-          )
-          .join("");
-      }
+            `).join('');
+        }
 
-      // Toggle plugin
-      async function togglePlugin(pluginName) {
-        try {
-          const response = await fetch(`/api/plugins/${pluginName}/toggle`, {
-            method: "POST",
-          });
-          const result = await response.json();
-
-          if (response.ok) {
-            const plugin = plugins.find((p) => p.name === pluginName);
-            if (plugin) {
-              plugin.enabled = result.enabled;
-              renderPlugins();
-              showNotification(
-                `Plugin ${pluginName} ${
-                  result.enabled ? "enabled" : "disabled"
-                }`,
-                "success"
-              );
+        // Generate plugin-specific configuration
+        function generatePluginConfig(plugin) {
+            switch(plugin.name) {
+                case 'Moderation':
+                    return `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Auto-Moderation</label>
+                                <select id="automod-${plugin.name}">
+                                    <option value="false">Disabled</option>
+                                    <option value="true">Enabled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Default Mute Duration (minutes)</label>
+                                <input type="number" id="muteDuration-${plugin.name}" value="10" min="1" max="40320">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Log Channel (optional)</label>
+                                <input type="text" id="logChannel-${plugin.name}" placeholder="#mod-logs">
+                            </div>
+                            <div class="form-group">
+                                <label>Max Warnings Before Action</label>
+                                <input type="number" id="maxWarnings-${plugin.name}" value="3" min="1" max="10">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="savePluginConfig('${plugin.name}')">Save Configuration</button>
+                    `;
+                    
+                case 'ServerStats':
+                    return `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Auto-Update Interval (seconds)</label>
+                                <input type="number" id="updateInterval-${plugin.name}" value="30" min="10" max="300">
+                            </div>
+                            <div class="form-group">
+                                <label>Show Detailed Stats</label>
+                                <select id="detailedStats-${plugin.name}">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Track Member Activity</label>
+                                <select id="trackActivity-${plugin.name}">
+                                    <option value="true">Enabled</option>
+                                    <option value="false">Disabled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Stats Channel (optional)</label>
+                                <input type="text" id="statsChannel-${plugin.name}" placeholder="#server-stats">
+                            </div>
+                        </div>
+                        <button class="btn" onclick="savePluginConfig('${plugin.name}')">Save Configuration</button>
+                    `;
+                    
+                case 'Utility':
+                    return `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Show Extended Help</label>
+                                <select id="extendedHelp-${plugin.name}">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ping Response Style</label>
+                                <select id="pingStyle-${plugin.name}">
+                                    <option value="embed">Embed</option>
+                                    <option value="text">Plain Text</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="savePluginConfig('${plugin.name}')">Save Configuration</button>
+                    `;
+                    
+                default:
+                    return `
+                        <div class="form-group">
+                            <label>Plugin Enabled</label>
+                            <select id="enabled-${plugin.name}">
+                                <option value="true" ${plugin.enabled ? 'selected' : ''}>Enabled</option>
+                                <option value="false" ${!plugin.enabled ? 'selected' : ''}>Disabled</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="savePluginConfig('${plugin.name}')">Save Configuration</button>
+                    `;
             }
-          } else {
-            showNotification(
-              result.error || "Failed to toggle plugin",
-              "error"
-            );
-          }
-        } catch (error) {
-          showNotification("Failed to toggle plugin", "error");
-        }
-      }
-
-      // Save configuration
-      async function saveConfig(event) {
-        event.preventDefault();
-
-        const formData = new FormData(event.target);
-        const newConfig = {};
-
-        for (let [key, value] of formData.entries()) {
-          newConfig[key] = value;
         }
 
-        try {
-          const response = await fetch("/api/config", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newConfig),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-          const text = await response.text();
-          let result;
-          try {
-            result = JSON.parse(text);
-          } catch (parseError) {
-            console.error("Save config JSON Parse Error:", parseError);
-            throw new Error("Invalid response from server");
-          }
-
-          if (result.success) {
-            config = { ...config, ...newConfig };
-            document.body.setAttribute("data-theme", config.theme);
-            showNotification("Configuration saved successfully!", "success");
-          } else {
-            throw new Error(result.error || "Unknown error");
-          }
-        } catch (error) {
-          console.error("Save config error:", error);
-          showNotification(
-            "Failed to save configuration: " + error.message,
-            "error"
-          );
+        // Toggle plugin configuration visibility
+        function togglePluginConfig(pluginName) {
+            const section = document.getElementById(`section-${pluginName}`);
+            const isVisible = section.classList.contains('active');
+            
+            // Hide all config sections
+            document.querySelectorAll('.config-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show this section if it wasn't visible
+            if (!isVisible) {
+                section.classList.add('active');
+            }
         }
-      }
 
-      // Show notification
-      function showNotification(message, type) {
-        const notification = document.getElementById("notification");
-        notification.textContent = message;
-        notification.className = `notification ${type} show`;
+        // Save plugin configuration
+        async function savePluginConfig(pluginName) {
+            const configData = {};
+            
+            // Collect all form data for this plugin
+            const elements = document.querySelectorAll(`[id*="-${pluginName}"]`);
+            elements.forEach(el => {
+                const key = el.id.split('-')[0];
+                configData[key] = el.type === 'number' ? parseInt(el.value) : el.value;
+            });
+            
+            try {
+                const response = await fetch(`/api/plugins/${pluginName}/config`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(configData)
+                });
+                
+                if (response.ok) {
+                    showNotification(`${pluginName} configuration saved!`, 'success');
+                } else {
+                    showNotification(`Failed to save ${pluginName} configuration`, 'error');
+                }
+            } catch (error) {
+                console.error('Save plugin config error:', error);
+                showNotification(`Error saving ${pluginName} configuration`, 'error');
+            }
+        }
 
-        setTimeout(() => {
-          notification.classList.remove("show");
-        }, 3000);
-      }
+        // Toggle plugin
+        async function togglePlugin(pluginName) {
+            try {
+                const response = await fetch(`/api/plugins/${pluginName}/toggle`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    const plugin = plugins.find(p => p.name === pluginName);
+                    if (plugin) {
+                        plugin.enabled = result.enabled;
+                        renderPlugins();
+                        showNotification(`Plugin ${pluginName} ${result.enabled ? 'enabled' : 'disabled'}`, 'success');
+                    }
+                } else {
+                    showNotification(result.error || 'Failed to toggle plugin', 'error');
+                }
+            } catch (error) {
+                showNotification('Failed to toggle plugin', 'error');
+            }
+        }
 
-      // Tab switching
-      function showTab(tabName) {
-        // Hide all tabs
-        document.querySelectorAll(".tab-content").forEach((tab) => {
-          tab.classList.remove("active");
+        // Save configuration
+        async function saveConfig(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const newConfig = {};
+            
+            for (let [key, value] of formData.entries()) {
+                newConfig[key] = value;
+            }
+            
+            try {
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newConfig)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(text);
+                } catch (parseError) {
+                    console.error('Save config JSON Parse Error:', parseError);
+                    throw new Error('Invalid response from server');
+                }
+                
+                if (result.success) {
+                    config = { ...config, ...newConfig };
+                    document.body.setAttribute('data-theme', config.theme);
+                    updateMentatTheme(config.theme);
+                    showNotification('Configuration saved successfully!', 'success');
+                } else {
+                    throw new Error(result.error || 'Unknown error');
+                }
+            } catch (error) {
+                console.error('Save config error:', error);
+                showNotification('Failed to save configuration: ' + error.message, 'error');
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Event listeners
+        document.getElementById('configForm').addEventListener('submit', saveConfig);
+        
+        // Theme change handler
+        document.getElementById('theme').addEventListener('change', function() {
+            document.body.setAttribute('data-theme', this.value);
+            updateMentatTheme(this.value);
         });
 
-        // Remove active class from buttons
-        document.querySelectorAll(".tab-button").forEach((btn) => {
-          btn.classList.remove("active");
-        });
+        // Update Mentat theme (title, subtitle, and image)
+        function updateMentatTheme(theme) {
+            const titleElement = document.getElementById('mentatTitle');
+            const subtitleElement = document.getElementById('mentatSubtitle');
+            const imageElement = document.getElementById('mentatImage');
+            
+            console.log('Updating theme to:', theme); // Debug
+            
+            // Always clear the subtitle first
+            subtitleElement.textContent = '';
+            subtitleElement.style.display = 'none';
+            
+            switch(theme) {
+                case 'atreides':
+                    titleElement.textContent = 'Thufir';
+                    subtitleElement.textContent = 'Master of Assassins - House Atreides Mentat';
+                    subtitleElement.style.display = 'block';
+                    imageElement.src = '/images/thufir.jpg';
+                    imageElement.style.display = 'block';
+                    imageElement.alt = 'Thufir Hawat - Atreides Mentat';
+                    document.title = 'Thufir - House Atreides Dashboard';
+                    
+                    // Debug: Test if image loads
+                    imageElement.onload = () => console.log('Thufir image loaded successfully');
+                    imageElement.onerror = () => console.error('Failed to load Thufir image from:', imageElement.src);
+                    break;
+                    
+                case 'harkonnen':
+                    titleElement.textContent = 'Piter';
+                    subtitleElement.textContent = 'Twisted Mentat - House Harkonnen\'s Blade';
+                    subtitleElement.style.display = 'block';
+                    imageElement.src = '/images/piter.jpg';
+                    imageElement.style.display = 'block';
+                    imageElement.alt = 'Piter de Vries - Harkonnen Mentat';
+                    document.title = 'Piter - House Harkonnen Dashboard';
+                    
+                    // Debug: Test if image loads
+                    imageElement.onload = () => console.log('Piter image loaded successfully');
+                    imageElement.onerror = () => console.error('Failed to load Piter image from:', imageElement.src);
+                    break;
+                    
+                default:
+                    titleElement.textContent = 'Mentat-Bot';
+                    subtitleElement.style.display = 'none';
+                    subtitleElement.textContent = ''; // Explicitly clear text
+                    imageElement.style.display = 'none';
+                    document.title = 'Mentat-Bot - Configuration Dashboard';
+                    break;
+            }
+        }
 
-        // Show selected tab
-        document.getElementById(tabName + "Tab").classList.add("active");
-        event.target.classList.add("active");
-      }
-
-      // Event listeners
-      document
-        .getElementById("configForm")
-        .addEventListener("submit", saveConfig);
-
-      // Theme change handler
-      document.getElementById("theme").addEventListener("change", function () {
-        document.body.setAttribute("data-theme", this.value);
-      });
-
-      // Initialize dashboard
-      init();
+        // Initialize dashboard
+        init();
     </script>
-  </body>
+</body>
 </html>

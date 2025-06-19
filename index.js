@@ -6,10 +6,6 @@ require("dotenv").config();
 
 const { DiscordBotFramework, UtilityPlugin } = require("./discord-framework");
 
-// Import plugins
-const ModerationPlugin = require("./plugins/moderation");
-const ServerStatsPlugin = require("./plugins/serverstats");
-
 // Bot configuration from environment variables
 const botConfig = {
   token: process.env.DISCORD_TOKEN,
@@ -40,56 +36,16 @@ bot.on("error", (error) => {
 // Load plugins manually (they will also auto-load from plugins directory)
 async function loadPlugins() {
   try {
-    console.log("📦 Loading plugins...");
+    console.log("📦 Loading built-in plugins...");
 
     // Load built-in utility plugin
     const utilityPlugin = new UtilityPlugin(bot);
     bot.plugins.set(utilityPlugin.name, utilityPlugin);
     console.log(`✅ Loaded plugin: ${utilityPlugin.name}`);
 
-    // Load moderation plugin
-    const moderationPlugin = new ModerationPlugin(bot);
-    await moderationPlugin.initialize();
-    bot.plugins.set(moderationPlugin.name, moderationPlugin);
-
-    // Register moderation commands
-    moderationPlugin.commands.forEach((cmd) => {
-      bot.commands.set(cmd.name, { ...cmd, plugin: moderationPlugin.name });
-    });
-
-    // Register moderation events
-    moderationPlugin.events.forEach((event) => {
-      bot.events.set(`${moderationPlugin.name}_${event.name}`, event);
-      bot.client.on(event.name, event.handler.bind(moderationPlugin));
-    });
-    console.log(
-      `✅ Loaded plugin: ${moderationPlugin.name} (${moderationPlugin.commands.length} commands)`
-    );
-
-    // Load server stats plugin
-    const serverStatsPlugin = new ServerStatsPlugin(bot);
-    await serverStatsPlugin.initialize();
-    bot.plugins.set(serverStatsPlugin.name, serverStatsPlugin);
-
-    // Register server stats commands
-    serverStatsPlugin.commands.forEach((cmd) => {
-      bot.commands.set(cmd.name, { ...cmd, plugin: serverStatsPlugin.name });
-    });
-
-    // Register server stats events
-    serverStatsPlugin.events.forEach((event) => {
-      bot.events.set(`${serverStatsPlugin.name}_${event.name}`, event);
-      bot.client.on(event.name, event.handler.bind(serverStatsPlugin));
-    });
-    console.log(
-      `✅ Loaded plugin: ${serverStatsPlugin.name} (${serverStatsPlugin.commands.length} commands)`
-    );
-
-    console.log(
-      `✅ All plugins loaded successfully! Total: ${bot.plugins.size} plugins, ${bot.commands.size} commands`
-    );
+    console.log(`✅ Built-in plugins loaded successfully!`);
   } catch (error) {
-    console.error("❌ Failed to load plugins:", error);
+    console.error("❌ Failed to load built-in plugins:", error);
   }
 }
 
@@ -181,8 +137,11 @@ async function startBot() {
     // Start web server first (so UI is available even if Discord fails)
     startWebServer();
 
-    // Load plugins
+    // Load plugins manually first
     await loadPlugins();
+
+    // Then auto-load from plugins directory
+    await bot.loadPlugins();
 
     // Initialize Discord connection
     if (botConfig.token) {
